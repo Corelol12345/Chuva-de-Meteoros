@@ -10,19 +10,15 @@ while True:
 
     op = int(input("Opção: "))
    
-    f1, f2 = map(int, input('Informe o Valor de f1 e f2 da Fazenda: ').split())
-    f3, f4 = map(int, input("Informe o Valor de f3 e f4 da Fazenda: ").split())
-    x1, x2 = map(int, input("Informa o Valor x1, x2 da Fazenda: ").split()) 
-    y1, y2 = map(int, input('Informe o Valor de y1 e y2 da sede: ').split())
 
-    if op >= 3:
+    if op > 3:
         break
     elif op == 5:
         break
     elif op == 1:
         f1, f2 = map(int, input('Informe o Valor de f1 e f2 da Fazenda: ').split())
         f3, f4 = map(int, input("Informe o Valor de f3 e f4 da Fazenda: ").split())
-        x1, x2 = map(int, input("Informa o Valor x1, x2 da Fazenda: ").split()) 
+        x1, x2 = map(int, input("Informa o Valor x1, x2 da sede: ").split()) 
         y1, y2 = map(int, input('Informe o Valor de y1 e y2 da sede: ').split())
         print("Coordenadas Definidas com Exito!")
     elif op == 2:

@@ -28,6 +28,19 @@ def houve_danos_sede(registros_meteoritos, sede):
             return True
     return False
 
+# Função para calcular o quadrante com base no ângulo
+def calcular_quadrante(angulo):
+    if 0 <= angulo < 90:
+        return "NE"
+    elif 90 <= angulo < 180:
+        return "NW"
+    elif 180 <= angulo < 270:
+        return "SW"
+    elif 270 <= angulo < 360:
+        return "SE"
+    else:
+        return "Desconhecido"
+
 # Menu de opções
 while True:
     print("-:: Sistema para Análise de Chuva de Meteoros ::-")
@@ -50,7 +63,7 @@ while True:
         sede = [(x_sede1, y_sede1), (x_sede2, y_sede2)]
     elif opcao == "2":
         distancia_upmcc = float(input("Digite a distância da UPMCC em coordenadas polares: "))
-        angulo_upmcc = float(input("Digite o ângulo da UPMCC em coordenadas polares (em graus): "))
+        angulo_upmcc = float(input("Digite o ângulo da UPMCC em graus (0 a 360): "))
         origem_upmcc = coordenadas_polar_para_cartesiana(distancia_upmcc, angulo_upmcc)
 
         # Atualize a posição da propriedade
@@ -65,7 +78,7 @@ while True:
         queda = 0  # Contador de quedas
 
         while True:
-            entrada = input(f"Registro #{queda + 1}\n-> Insira a distância e o ângulo (ou '-' para encerrar): ")
+            entrada = input(f"Registro #{queda + 1}\n-> Insira a distância e o ângulo em graus (ou '-' para encerrar): ")
             if entrada == "-":
                 break
 
@@ -75,7 +88,7 @@ while True:
                 continue
 
             distancia = float(valores[0])
-            angulo = float(valores[1])
+            angulo = float(valores[1])  # Certifique-se de que o ângulo está em graus
             registros_meteoritos.append((distancia, angulo))
 
             queda += 1
@@ -88,23 +101,19 @@ while True:
         quadrantes = {"NE": 0, "NW": 0, "SW": 0, "SE": 0}
 
         for registro in registros_meteoritos:
-            angulo = math.degrees(registro[1])
+            angulo = registro[1]
+            quadrante = calcular_quadrante(angulo)
 
-            if 0 <= angulo < 90:
-                quadrantes["NE"] += 1
-            elif 90 <= angulo < 180:
-                quadrantes["NW"] += 1
-            elif 180 <= angulo < 270:
-                quadrantes["SW"] += 1
-            else:
-                quadrantes["SE"] += 1
+            # Verifique se o quadrante é válido antes de incrementar
+            if quadrante in quadrantes:
+                quadrantes[quadrante] += 1
 
         print(f"Total de quedas registradas: {total_meteoritos} ({total_meteoritos / total_meteoritos * 100:.1f}%)")
         print(f"Quedas dentro da propriedade: {meteoritos_na_propriedade} ({meteoritos_na_propriedade / total_meteoritos * 100:.1f}%)")
 
-        # Imprimir contagem por quadrante
+        # Imprimir estatísticas para cada quadrante
         for quadrante, quantidade in quadrantes.items():
-            print(f"-> Quadrante {quadrante}: {quantidade} ({quantidade / total_meteoritos * 100:.2f}%)")
+            print(f"-> Quadrante {quadrante}: {quantidade} ({quantidade / total_meteoritos * 100:.1f}%)")
 
         if houve_danos_sede(registros_meteoritos, sede):
             print("A edificação principal foi atingida? SIM")
@@ -114,4 +123,4 @@ while True:
         print("Programa encerrado.")
         break
     else:
-        print("Opção Invalida")
+        print("Opção inválida. Tente novamente.")
