@@ -1,0 +1,6 @@
+print("-:: Sistema para Análise de Chuva de Meteoros ::-")
+print("1. Definir perímetro da propriedade e da edificação de interesse")
+print("2. Unificar sistemas de coordenadas de referência")
+print("3. Processar registros de chuva de meteoros")
+print("4. Apresentar estatísticas")
+print("5. Sair")
